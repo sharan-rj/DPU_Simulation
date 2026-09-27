@@ -1,0 +1,26 @@
+---> Create an Isolated Linux bridge with a different subnet for encryption traffic. 
+
+
+Peer -A 
+
+Sudo tee /etc/netplan/60-labwire.yaml >/dev/null <<'EOF'
+network:
+  version: 2
+  ethernets:
+    ens19:
+      addresses: [172.16.10.1/24]
+EOF
+
+
+
+      
+Peer - B
+
+Sudo tee /etc/netplan/60-labwire.yaml >/dev/null <<'EOF'
+network:
+  version: 2
+  ethernets:
+    ens19:
+      addresses: [172.16.10.2/24]
+
+EOF
