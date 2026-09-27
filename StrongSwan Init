@@ -1,0 +1,17 @@
+Platform: Ubuntu 24.06 LTS
+
+sudo apt -y install strongswan-swanctl charon-systemd
+sudo ip link add lan0 type dummy && sudo ip link set lan0 up  (Think of it like a virtual tunnel Interface on Cisco terms)
+sudo ip addr add 10.1.1.1/24 dev lan0      ##Swap for other VPN peer
+
+
+If there are any warnings when loading Strongswan 
+
+sudo apt -y install libstrongswan-extra-plugins libcharon-extra-plugins
+sudo systemctl restart strongswan
+sudo swanctl --load-all 
+sudo swanctl --initiate --child net
+
+sudo swanctl --list-sas            # watch the bytes/packets counters rise
+sudo ip xfrm state                 # the same two SPIs, as the kernel data plane holds them
+sudo tcpdump -ni ens19 esp         # second terminal while pinging: only ESP on the wire
