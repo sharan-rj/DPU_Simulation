@@ -6,13 +6,6 @@ ip addr add 192.168.123.3/24 dev $DEV
 ip link set $DEV up
 
 
-
-
-
-
-
-
-
 "ethtool -k $DEV | grep esp"
 
 The below output should be seen 
