@@ -1,0 +1,41 @@
+Peer - A 
+
+/etc/swanctl/conf.d/lab.conf
+
+
+connections {
+  lab {
+    version      = 2
+    local_addrs  = 172.16.10.1
+    remote_addrs = 172.16.10.2
+    proposals    = aes256-sha256-x25519
+    local {
+      auth = psk
+      id   = ipsec-a
+    }
+    remote {
+      auth = psk
+      id   = ipsec-b
+    }
+    children {
+      net {
+        local_ts      = 10.1.1.0/24
+        remote_ts     = 10.2.2.0/24
+        esp_proposals = aes256gcm16-x25519
+        rekey_time    = 5m
+        start_action  = trap
+        hw_offload    = no
+      }
+    }
+  }
+}
+secrets {
+  ike-lab {
+    id-a   = ipsec-a
+    id-b   = ipsec-b
+    secret = "pre-shared-key"
+  }
+}
+
+
+## Swap the local_addr, id, and subnets for Peer - B
